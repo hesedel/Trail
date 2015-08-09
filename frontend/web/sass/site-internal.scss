@@ -1,0 +1,99 @@
+@import 'vendor/main';
+@import 'vendor/bootstrap/variables',
+        'vendor/bootstrap/mixins',
+        'vendor/bootstrap/normalize',
+        'vendor/bootstrap/scaffolding',
+        'vendor/bootstrap/grid',
+        'vendor/bootstrap/responsive-utilities';
+@import 'compass';
+@import 'vars';
+
+body {
+    background-color: map-get($color, bg-footer) !important;
+    cursor: default;
+    font-family: map-get(map-get($font, sans), family) !important;
+    line-height: map-get($css, line-height) !important;
+
+    a {
+        color: map-get($color, blue);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: map-get($css, line-height);
+        margin-top: map-get($css, line-height);
+    }
+
+    hr {
+        border-color: map-get($color, bg-footer);
+        margin-bottom: map-get($css, line-height) - 1px;
+        margin-top: map-get($css, line-height);
+    }
+}
+
+p {
+    margin-bottom: map-get($css, line-height);
+    margin-top: map-get($css, line-height);
+}
+
+ul {
+    margin-bottom: map-get($css, line-height);
+    margin-top: map-get($css, line-height);
+    padding-left: $grid-gutter-width;
+}
+
+.clear {
+    clear: both;
+}
+
+.b-header {
+    background-color: map-get($color, white);
+    padding-bottom: map-get($css, line-height);
+    padding-top: map-get($css, line-height);
+
+    &__h1 {
+        font-size: 1em;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    &__a-logo {
+        float: left;
+
+        @media (min-width: $screen-xs-min) {
+            margin-right: $grid-gutter-width * .5;
+        }
+
+        @media (min-width: $screen-sm-min) {
+            margin-right: $grid-gutter-width;
+        }
+    }
+
+    &__logo {
+        display: block;
+        height: map-get($css, line-height) * 1.5;
+    }
+
+    &__country {
+        background-color: map-get($color, orange);
+        @include border-radius($border-radius-small);
+        color: map-get($color, white);
+        float: right;
+        font-weight: map-get(map-get(map-get($font, sans), weight), lighter);
+        height: map-get($css, line-height) * 1.5;
+        line-height: map-get($css, line-height) * 1.5;
+        padding-left: $grid-gutter-width * .25;
+        padding-right: $grid-gutter-width * .25;
+
+        @media (min-width: $screen-xs-min) {
+            float: left;
+        }
+    }
+}
+
+.b-body {
+    @media (min-width: $screen-sm-min) {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: $container-sm + $grid-gutter-width;
+    }
+}

@@ -1,0 +1,97 @@
+$screen-xs-min: 480px;
+
+/* colors */
+
+@function blacken($color, $percent, $i: 1) {
+    @while $i > 0 {
+        $color: mix(#000, $color, $percent);
+        $i: $i - 1;
+    }
+    @return $color;
+}
+
+@function whiten($color, $percent, $i: 1) {
+    @while $i > 0 {
+        $color: mix(#fff, $color, $percent);
+        $i: $i - 1;
+    }
+    @return $color;
+}
+
+@function color-hex($color) {
+    $color: str-slice('#{$color}', 2, str-length('#{$color}'));
+    @if str-length($color) == 3 {
+        @for $i from 1 through str-length($color) {
+            $color: str-insert($color, str-slice($color, ($i * 2) - 1, ($i * 2) - 1), $i * 2);
+        }
+    }
+    @return '0x' + $color;
+}
+
+$color: (
+    black: #000,
+    white: #fff,
+
+    blue: #00bfe2,
+    green: #5db651,
+    orange: #f47b29,
+
+    brown: #8c6c60,
+    light-brown: #e9e5dd,
+    lighter-brown: #f0ede5,
+
+    flatuicolorsDOTcom: (
+        alizarin:     #e74c3c,
+        amethyst:     #9b59b6,
+        asbestos:     #7f8c8d,
+        belizeHole:   #2980b9,
+        carrot:       #e67e22,
+        clouds:       #ecf0f1,
+        concrete:     #95a5a6,
+        emerald:      #2ecc71,
+        greenSea:     #16a085,
+        midnightBlue: #2c3e50,
+        nephritis:    #27ae60,
+        orange:       #f39c12,
+        peterRiver:   #3498db,
+        pomegranate:  #c0392b,
+        pumpkin:      #d35400,
+        silver:       #bdc3c7,
+        sunFlower:    #f1c40f,
+        turquoise:    #1abc9c,
+        wetAsphalt:   #34495e,
+        wisteria:     #8e44ad
+    ),
+
+    highlight: #ff6
+);
+
+$color: map-merge($color, (
+    bg: map-get($color, white),
+    bg-footer: map-get($color, light-brown)
+));
+
+/* fonts */
+
+$font: (
+    sans: (
+        family: #{proxima-nova, sans-serif},
+        weight: (
+            lighter: 100,
+            normal: 400,
+            bold: 600
+        )
+    ),
+    serif: (
+        family: #{adelle, sans-serif},
+        weight: (
+            bold: 600
+        )
+    )
+);
+
+/* css */
+
+$css: (
+    line-height: 18px
+);

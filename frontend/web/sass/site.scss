@@ -1,0 +1,219 @@
+@import 'vendor/bootstrap/variables',
+        'vendor/bootstrap/mixins',
+        'vendor/bootstrap/normalize',
+        'vendor/bootstrap/scaffolding',
+        'vendor/bootstrap/grid',
+        'vendor/bootstrap/forms',
+        'vendor/bootstrap/buttons',
+        //'vendor/bootstrap/button-groups',
+        'vendor/bootstrap/navs',
+        'vendor/bootstrap/list-group',
+        'vendor/bootstrap/responsive-utilities';
+@import 'vendor/font-awesome';
+@import 'compass';
+@import 'vars';
+
+body {
+    a {
+        &:hover, &:focus {
+            color: map-get(map-get($color, flatuicolorsDOTcom), wisteria);
+        }
+
+        &:focus {
+            outline: none;
+            text-decoration: none;
+        }
+    }
+}
+
+/*
+
+.lt-ie8 {
+    .container {
+        @media (min-width: $screen-xs-min) {
+            width: $screen-xs - $grid-gutter-width;
+        }
+
+        @media (min-width: $screen-md-min) {
+            width: $container-sm - $grid-gutter-width - 6px;
+        }
+    }
+
+    .col-xs-4,
+    .col-xs-6,
+    .col-sm-3,
+    .col-sm-6 {
+        padding-left: 0;
+        padding-right: 0;
+
+        > * {
+            margin-left: $grid-gutter-width * .5;
+            margin-right: $grid-gutter-width * .5;
+        }
+    }
+
+    .col-xs-4 {
+        width: 33.2%;
+    }
+
+    @media (min-width: $screen-md-min) {
+        .col-sm-2 {
+            width: 100% * (1 / 6);
+        }
+
+        .col-sm-offset-3 {
+            margin-left: 26%;
+        }
+
+        .col-sm-offset-6 {
+            margin-left: 52%;
+        }
+    }
+}
+
+*/
+
+.b-lt-ie10 {
+    background-color: map-get(map-get($color, flatuicolorsDOTcom), sunFlower);
+    display: none;
+
+    @media (min-width: $screen-sm-min) {
+        @include border-bottom-radius(2px);
+    }
+
+    &__p {
+        color: map-get($color, brown);
+        margin-bottom: 0;
+        margin-top: 0;
+        padding-bottom: map-get($css, line-height);
+        padding-top: map-get($css, line-height);
+        text-align: center;
+
+        .no-js {
+            display: none;
+        }
+    }
+
+    &__logo {
+        display: block;
+        height: map-get($css, line-height) * 3;
+        margin-bottom: map-get($css, line-height);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @at-root .no-js.lt-ie9 & {
+        bottom: 0;
+        left: 0;
+        @include opacity(.9);
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1;
+
+        .no-js {
+            display: inline;
+        }
+
+        .js {
+            display: none;
+        }
+    }
+
+    @at-root .lt-ie8 & {
+        @media (min-width: $screen-xs-min) {
+            width: $screen-xs - $grid-gutter-width;
+        }
+
+        @media (min-width: $screen-md-min) {
+            width: $container-sm - $grid-gutter-width;
+        }
+    }
+}
+
+.b-header {
+    &__a-logo {
+        @at-root .lt-ie9 & {
+            @media (min-width: $screen-xs-min) {
+                margin-right: $grid-gutter-width * .5;
+            }
+
+            @media (min-width: $screen-sm-min) {
+                margin-right: $grid-gutter-width;
+            }
+        }
+    }
+
+    &__country {
+        @at-root .lt-ie9 & {
+            @media (min-width: $screen-xs-min) {
+                float: left;
+            }
+        }
+    }
+}
+
+.b-body {
+    @at-root .lt-ie9 & {
+        @media (min-width: $screen-sm-min) {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: $container-sm + $grid-gutter-width;
+        }
+    }
+}
+
+.b-footer {
+    padding-bottom: map-get($css, line-height) * 3;
+    padding-top: map-get($css, line-height) * 2;
+
+    &__familylife,
+    &__pajaroncreative,
+    &__copyright {
+        text-align: center;
+    }
+
+    &__familylife,
+    &__pajaroncreative {
+        @media (min-width: $screen-sm-min) {
+            float: left;
+            margin-right: $grid-gutter-width * .5;
+        }
+    }
+
+    &__pajaroncreative,
+    &__copyright {
+        padding-top: map-get($css, line-height);
+
+        @media (min-width: $screen-sm-min) {
+            padding-top: 0;
+        }
+    }
+
+    &__pajaroncreative {
+        display: none;
+    }
+
+    &__copyright {
+        @media (min-width: $screen-sm-min) {
+            float: right;
+        }
+    }
+
+    &__a {
+        background-color: map-get($color, brown);
+        @include border-radius($border-radius-small);
+        color: map-get($color, white);
+        display: inline-block;
+        padding: #{map-get($css, line-height) * .25} #{$grid-gutter-width * .5};
+
+        &:hover {
+            color: map-get($color, white);
+            text-decoration: none;
+        }
+    }
+
+    &__copyright {
+        color: map-get($color, brown);
+    }
+}

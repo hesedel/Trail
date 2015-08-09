@@ -1,0 +1,12 @@
+<?php
+$xml  = '<?xml version="1.0"?>';
+$xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+$xml .= '	<url>';
+$xml .= '		<loc>http://'.$_SERVER['HTTP_HOST'].'/</loc>';
+$xml .= '		<changefreq>monthly</changefreq>';
+$xml .= '		<priority>0.9</priority>';
+$xml .= '	</url>';
+$xml .= '</urlset>';
+
+header('content-type: text/xml');
+echo $xml;

@@ -1,0 +1,88 @@
+#!/usr/bin/env php
+<?php
+echo "\n";
+echo `git reset --hard`;
+echo `git pull`;
+
+# remove dev update script
+echo "\nremoving dev update script...";
+if (file_exists('frontend/web/update.php')) {
+	if (unlink('frontend/web/update.php')) {
+		echo "\ndev update script removed\n";
+	}
+} else {
+	echo "\nno dev update script exists\n";
+}
+
+# clear runtime
+//`find frontend/runtime -mindepth 1 ! -name .gitignore -exec rm -rf {} +`;
+cleardir('frontend/runtime');
+
+# clear assets
+//`find frontend/web/assets -mindepth 1 ! -name .gitignore -exec rm -rf {} +`;
+cleardir('frontend/web/assets');
+
+# clear css
+//`find frontend/web/css -mindepth 1 ! -name .gitignore -exec rm -rf {} +`;
+cleardir('frontend/web/css');
+
+# compile sass compass
+echo "\ncompiling sass compass...\n";
+echo `compass compile frontend/web`;
+//`rm -rf frontend/web/.sass-cache`;
+rrmdir('.sass-cache');
+
+# assets-prod.php
+echo "\nremoving assets-prod.php...";
+if (file_exists('frontend/config/assets-prod.php')) {
+	if (unlink('frontend/config/assets-prod.php')) {
+		echo "\nassets-prod.php removed\n";
+	}
+} else {
+	echo "\nno assets-prod.php exists\n";
+}
+echo "\ngenerating assets-prod.php...\n";
+echo `php yii asset frontend/assets.php frontend/config/assets-prod.php`;
+
+# done
+echo "\ndone\n\n";
+
+# helper functions
+
+function cleardir($dir) {
+	echo "\nclearing " . basename($dir) . "...";
+	$errors = 0;
+	foreach (glob($dir . '/*') as $match) {
+		if (is_dir($match)) {
+			if (!rrmdir($match)) {
+				$errors++;
+			}
+		} else {
+			if (!unlink($match)) {
+				$errors++;
+			}
+		}
+	}
+	if ($errors === 0) {
+		echo "\n" . basename($dir) . " cleared\n";
+	}
+}
+
+function rrmdir($dir) {
+	$errors = 0;
+	foreach (glob($dir . '/*') as $match) {
+		if (is_dir($match)) {
+			if (!rrmdir($match)) {
+				$errors++;
+			}
+		} else {
+			if (!unlink($match)) {
+				$errors++;
+			}
+		}
+	}
+	if (!rmdir($dir)) {
+		$errors++;
+	}
+	return $errors === 0 ? true : false;
+}
