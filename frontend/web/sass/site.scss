@@ -1,14 +1,14 @@
 @import 'vendor/bootstrap/variables',
         'vendor/bootstrap/mixins',
-        'vendor/bootstrap/normalize',
-        'vendor/bootstrap/scaffolding',
-        'vendor/bootstrap/grid',
-        'vendor/bootstrap/forms',
+        //'vendor/bootstrap/normalize',
+        //'vendor/bootstrap/scaffolding',
+        //'vendor/bootstrap/grid',
+        //'vendor/bootstrap/forms',
         'vendor/bootstrap/buttons',
-        //'vendor/bootstrap/button-groups',
-        'vendor/bootstrap/navs',
-        'vendor/bootstrap/list-group',
-        'vendor/bootstrap/responsive-utilities';
+        'vendor/bootstrap/button-groups';//,
+        //'vendor/bootstrap/navs',
+        //'vendor/bootstrap/list-group',
+        //'vendor/bootstrap/responsive-utilities';
 @import 'vendor/font-awesome';
 @import 'compass';
 @import 'vars';
@@ -131,37 +131,15 @@ body {
     }
 }
 
-.b-header {
-    &__a-logo {
-        @at-root .lt-ie9 & {
-            @media (min-width: $screen-xs-min) {
-                margin-right: $grid-gutter-width * .5;
-            }
+.b-navbar {}
 
-            @media (min-width: $screen-sm-min) {
-                margin-right: $grid-gutter-width;
-            }
-        }
-    }
-
-    &__country {
-        @at-root .lt-ie9 & {
-            @media (min-width: $screen-xs-min) {
-                float: left;
-            }
-        }
+.pac-container {
+    &:after {
+        content: none !important;
     }
 }
 
-.b-body {
-    @at-root .lt-ie9 & {
-        @media (min-width: $screen-sm-min) {
-            margin-left: auto;
-            margin-right: auto;
-            max-width: $container-sm + $grid-gutter-width;
-        }
-    }
-}
+.b-body {}
 
 .b-footer {
     padding-bottom: map-get($css, line-height) * 3;

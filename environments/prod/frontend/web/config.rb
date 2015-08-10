@@ -19,3 +19,5 @@ line_comments = false
 color_output = false
 
 preferred_syntax = :scss
+
+Sass::Script::Number.precision = 8

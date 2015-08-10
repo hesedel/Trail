@@ -20,3 +20,5 @@ environment = :development
 color_output = false
 
 preferred_syntax = :scss
+
+Sass::Script::Number.precision = 8

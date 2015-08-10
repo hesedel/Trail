@@ -8,6 +8,9 @@ use frontend\assets\AppAsset2;
 
 AppAsset::register($this);
 AppAsset2::register($this);
+if (YII_ENV_DEV) {
+    yii\debug\ToolbarAsset::register($this);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -32,8 +35,8 @@ AppAsset2::register($this);
 
     <title><?= Html::encode($this->title) ?></title>
 
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <?php //<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"> ?>
+    <?php //<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"> ?>
 
     <?php if ( $this->beginCache('css-' . $this->context->module->requestedAction->id, ['duration' => 0, 'enabled' => YII_ENV_PROD ? true : false]) ) { ?><?= Html::style(
         rtrim(
@@ -89,25 +92,41 @@ AppAsset2::register($this);
     </div>
     <![endif]-->
 
-    <header class="b-header">
-        <div class="container">
-            <h1 class="b-header__h1">
-                <?= Html::a(
-                    Html::img(
-                        '/img/vendor/slir/h54/img/logo.png',
-                        //'http://res.cloudinary.com/pajaroncreative/image/upload/c_fill,h_1080,w_1920/v1424604576/bg_nj7thv.png',
-                        array(
-                            'class' => 'b-header__logo',
-                            'alt' => 'FamilyLife',
-                        )
-                    ),
-                    array('/site/index'),
-                    array('class' => 'b-header__a-logo')
-                ) ?>
-                <span class="b-header__country">Philippines</span>
-            </h1>
+    <nav class="b-navbar navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Trail</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                </ul>
+
+                <div class="b-search navbar-form" role="search">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="js-b-search__button--currentLocation btn btn-default" type="button"><i class="fa fa-crosshairs"></i></button>
+                            </span>
+                            <input type="text" class="js-b-search__inputText form-control" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <div class="b-body">
         <?= $content ?>
@@ -117,7 +136,7 @@ AppAsset2::register($this);
         <div class="container">
             <div class="b-footer__familylife"> <?= Html::a('FamilyLife', 'http://www.familylife.com/', array('class' => 'b-footer__a', 'rel' => 'nofollow')) ?></div>
             <div class="b-footer__pajaroncreative"> <?= Html::a('Pajaron Creative', 'http://pajaroncreative.com/', array('class' => 'b-footer__a')) ?></div>
-            <div class="b-footer__copyright">&copy; <?= date('Y') ?> FamilyLife Philippines</div>
+            <div class="b-footer__copyright">&copy; <?= date('Y') ?> Trail</div>
         </div>
     </footer>
 
@@ -144,6 +163,7 @@ AppAsset2::register($this);
 
     <script>
     // Typekit
+    /*
     (function(d) {
     var config = {
     kitId: 'jud2zwh',
@@ -151,6 +171,7 @@ AppAsset2::register($this);
     },
     h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
+    */
     </script>
     <?php if ( $_SERVER['HTTP_HOST'] === 'familylife.ph' ) { ?>
 
@@ -171,6 +192,8 @@ AppAsset2::register($this);
     <?= Html::script(null, array('src' => '/js/vendor/modernizr-2.6.2.min.js')) ?>
 
     <!--<![endif]-->
+    <?= Html::script(null, array('src' => 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAjuLw6nncCfFh_qaWBlfw7ftnBU_8lkgk&libraries=places')) ?>
+
 
 <?php $this->endBody() ?>
 

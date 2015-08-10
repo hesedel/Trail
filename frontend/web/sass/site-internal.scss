@@ -4,15 +4,25 @@
         'vendor/bootstrap/normalize',
         'vendor/bootstrap/scaffolding',
         'vendor/bootstrap/grid',
-        'vendor/bootstrap/responsive-utilities';
+        'vendor/bootstrap/forms',
+        'vendor/bootstrap/buttons',
+        'vendor/bootstrap/input-groups',
+        'vendor/bootstrap/navs',
+        'vendor/bootstrap/navbar';//,
+        //'vendor/bootstrap/responsive-utilities';
 @import 'compass';
 @import 'vars';
+
+html,
+body {
+    height: 100%;
+}
 
 body {
     background-color: map-get($color, bg-footer) !important;
     cursor: default;
-    font-family: map-get(map-get($font, sans), family) !important;
-    line-height: map-get($css, line-height) !important;
+    //font-family: map-get(map-get($font, sans), family) !important;
+    //line-height: map-get($css, line-height) !important;
 
     a {
         color: map-get($color, blue);
@@ -24,7 +34,7 @@ body {
     }
 
     hr {
-        border-color: map-get($color, bg-footer);
+        //border-color: map-get($color, bg-footer);
         margin-bottom: map-get($css, line-height) - 1px;
         margin-top: map-get($css, line-height);
     }
@@ -45,55 +55,26 @@ ul {
     clear: both;
 }
 
-.b-header {
-    background-color: map-get($color, white);
-    padding-bottom: map-get($css, line-height);
-    padding-top: map-get($css, line-height);
+.b-navbar {
+    left: 0;
+    position: absolute;
+    right: 0;
+}
 
-    &__h1 {
-        font-size: 1em;
-        margin-bottom: 0;
-        margin-top: 0;
+.b-search {
+    .form-group {
+        display: inline;
     }
 
-    &__a-logo {
-        float: left;
-
-        @media (min-width: $screen-xs-min) {
-            margin-right: $grid-gutter-width * .5;
-        }
-
-        @media (min-width: $screen-sm-min) {
-            margin-right: $grid-gutter-width;
-        }
+    .input-group {
+        display: table;
     }
 
-    &__logo {
-        display: block;
-        height: map-get($css, line-height) * 1.5;
-    }
-
-    &__country {
-        background-color: map-get($color, orange);
-        @include border-radius($border-radius-small);
-        color: map-get($color, white);
-        float: right;
-        font-weight: map-get(map-get(map-get($font, sans), weight), lighter);
-        height: map-get($css, line-height) * 1.5;
-        line-height: map-get($css, line-height) * 1.5;
-        padding-left: $grid-gutter-width * .25;
-        padding-right: $grid-gutter-width * .25;
-
-        @media (min-width: $screen-xs-min) {
-            float: left;
-        }
+    .input-group-btn.input-group-btn {
+        width: 1%;
     }
 }
 
 .b-body {
-    @media (min-width: $screen-sm-min) {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: $container-sm + $grid-gutter-width;
-    }
+    height: 100%;
 }
