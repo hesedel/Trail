@@ -5,8 +5,9 @@
         //'vendor/bootstrap/grid',
         //'vendor/bootstrap/forms',
         'vendor/bootstrap/buttons',
-        'vendor/bootstrap/button-groups';//,
+        'vendor/bootstrap/button-groups',
         //'vendor/bootstrap/navs',
+        'vendor/bootstrap/alerts';//,
         //'vendor/bootstrap/list-group',
         //'vendor/bootstrap/responsive-utilities';
 @import 'vendor/font-awesome';
@@ -140,6 +141,34 @@ body {
 }
 
 .b-body {}
+
+.b-toolbox {
+    &__1 {
+        .js-b-site_index--is-creating & {
+            display: none;
+        }
+    }
+
+    &__2 {
+        .js-b-site_index--is-creating & {
+            display: block;
+        }
+    }
+
+    &--footer {
+        &__2 {
+            .js-b-site_index--is-creating & {
+                display: block;
+            }
+        }
+    }
+}
+
+.b-steps {
+    .js-b-site_index--is-creating & {
+        display: block;
+    }
+}
 
 .b-footer {
     padding-bottom: map-get($css, line-height) * 3;

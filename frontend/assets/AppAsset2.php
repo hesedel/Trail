@@ -20,7 +20,7 @@ class AppAsset2 extends AssetBundle
     public $css = [
     ];
     public $js = [
-        'js/vendor/bootstrap/tab.js',
+        'js/vendor/bootstrap/collapse.js',
         'js/site.js',
     ];
     public $depends = [

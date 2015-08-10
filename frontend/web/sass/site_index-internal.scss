@@ -2,10 +2,12 @@
 @import 'compass';
 @import 'vars';
 
-.b-site_index,
-.b-sidebar,
-.b-map {
+.b-site_index {
     height: 100%;
+}
+
+.js-b-site_index {
+    &--is-creating {}
 }
 
 .b-sidebar,
@@ -15,11 +17,39 @@
 
 .b-sidebar {
     float: right;
+    height: 100%;
+    min-width: $screen-xs-min * .75;
+    position: relative;
     width: 25%;
 }
 
+.b-toolbox {
+    height: $navbar-height;
+    line-height: $navbar-height;
+    text-align: center;
+
+    &__2 {
+        display: none;
+    }
+
+    &--footer {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+
+        &__2 {
+            display: none;
+        }
+    }
+}
+
+.b-steps {
+    display: none;
+}
+
 .b-map {
-    width: 75%;
+    height: 100%;
 
     &__canvas {
         height: 100%;

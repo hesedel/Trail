@@ -2,6 +2,9 @@ $(function () {
     'use strict';
 
     function initialize() {
+        var markers = [];
+        var $searchBox = $('.js-b-search__inputText');
+        var searchBox = new google.maps.places.SearchBox($searchBox.get(0));
         var map = new google.maps.Map($('.b-map__canvas').get(0), {
             center: {
                 lat: 48.124104599999995,
@@ -25,10 +28,6 @@ $(function () {
                 });
             });
         });
-
-        var markers = [];
-        var $searchBox = $('.js-b-search__inputText');
-        var searchBox = new google.maps.places.SearchBox($searchBox.get(0));
 
         google.maps.event.addListener(searchBox, 'places_changed', function () {
             var places = searchBox.getPlaces();
@@ -57,6 +56,54 @@ $(function () {
             }
 
             map.fitBounds(places[0].geometry.viewport);
+        });
+
+        $('.js-b-toolbox__button--create').on('click', function () {
+            $('.js-b-site_index').addClass('js-b-site_index--is-creating');
+        });
+
+        var poi = {
+            ORIGIN: 0,
+            WAYPOINT: 1,
+            DESTINATION: 2,
+            active: 0
+        };
+        $('.js-b-toolbox__button--poi').on('click', function () {
+            $('.js-b-toolbox__button--poi').removeClass('active');
+            $(this).addClass('active');
+
+            switch ($(this).data('poi')) {
+            case 'origin':
+                poi.active = poi.ORIGIN;
+                break;
+            case 'destination':
+                poi.active = poi.DESTINATION;
+                break;
+            default:
+                poi.active = poi.WAYPOINT;
+            }
+        });
+
+        var set = google.maps.InfoWindow.prototype.set;
+        google.maps.InfoWindow.prototype.set = function (a, b) {
+            if (a === 'content') {
+                $('.b-steps').append(b);
+            }
+
+            if (a === 'position') {
+                new google.maps.Marker( {
+                    position: b,
+                    map: map
+                });
+            }
+
+            //set.apply(this, arguments);
+        }
+        google.maps.event.addListener(map, 'click', function (event) {
+            new google.maps.Marker( {
+                position: event.latLng,
+                map: map
+            });
         });
     }
 
