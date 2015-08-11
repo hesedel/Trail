@@ -3,3 +3,31 @@
 @import 'vars';
 
 .b-site_index {}
+
+.b-toolbox {
+    &__browse {
+        .js-app--is-creating & {
+            display: none;
+        }
+    }
+
+    &__createUpdate {
+        .js-app--is-creating & {
+            display: block;
+        }
+    }
+
+    &--footer {
+        &__createUpdate {
+            .js-app--is-creating & {
+                display: block;
+            }
+        }
+    }
+}
+
+.b-steps {
+    .js-app--is-creating & {
+        display: block;
+    }
+}

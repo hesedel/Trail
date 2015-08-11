@@ -118,7 +118,7 @@ if (YII_ENV_DEV) {
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="js-b-search__button--currentLocation btn btn-default" type="button"><i class="fa fa-crosshairs"></i></button>
+                                <button class="js-b-search__button--currentPosition btn btn-default" type="button"><i class="fa fa-crosshairs"></i></button>
                             </span>
                             <input type="text" class="js-b-search__inputText form-control" placeholder="Search">
                         </div>

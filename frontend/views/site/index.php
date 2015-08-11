@@ -12,29 +12,31 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Trail - ' . Yii::
 <main class="js-b-site_index b-site_index">
     <section class="b-sidebar">
         <div class="b-toolbox">
-            <div class="b-toolbox__1">
+            <div class="b-toolbox__browse">
                 <?= Html::button('Create a Trail', array('class' => 'js-b-toolbox__button--create btn btn-default')) ?>
             </div>
 
-            <div class="b-toolbox__2">
-                <div class="btn-group">
-                    <?= Html::button('Origin', array('class' => 'js-b-toolbox__button--poi btn btn-default active', 'data-poi' => 'origin')) ?>
-                    <?= Html::button('Waypoint', array('class' => 'js-b-toolbox__button--poi btn btn-default', 'data-poi' => 'waypoint')) ?>
-                    <?= Html::button('Destination', array('class' => 'js-b-toolbox__button--poi btn btn-default', 'data-poi' => 'destination')) ?>
+            <div class="b-toolbox__createUpdate">
+                <div class="js-b-toolbox__buttons--poi btn-group">
+                    <?= Html::button('Origin', array('class' => 'btn btn-default active', 'data-poi-type' => '0')) ?>
+                    <?= Html::button('Waypoint', array('class' => 'btn btn-default', 'data-poi-type' => '1')) ?>
+                    <?= Html::button('Destination', array('class' => 'btn btn-default', 'data-poi-type' => '2')) ?>
                 </div>
             </div>
         </div>
 
         <div class="b-steps">
+            <?php /*
             <div class="alert alert-info" role="alert">
                 Click on the map to designate the starting point.
             </div>
+            */ ?>
         </div>
 
         <div class="b-toolbox b-toolbox--footer">
-            <div class="b-toolbox--footer__2">
-                <?= Html::button('Cancel', array('class' => 'btn btn-default')) ?>
-                <?= Html::button('Save', array('class' => 'btn btn-default')) ?>
+            <div class="b-toolbox--footer__createUpdate">
+                <?= Html::button('Cancel', array('class' => 'js-b-toolbox__button--cancel btn btn-default')) ?>
+                <?= Html::button('Save', array('class' => 'js-b-toolbox__button--save btn btn-default')) ?>
             </div>
         </div>
     </section>

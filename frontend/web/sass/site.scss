@@ -27,6 +27,15 @@ body {
     }
 }
 
+.btn:focus,
+.btn.focus,
+.btn:active:focus,
+.btn:active.focus,
+.btn.active:focus,
+.btn.active.focus {
+    outline: none;
+}
+
 /*
 
 .lt-ie8 {
@@ -141,34 +150,6 @@ body {
 }
 
 .b-body {}
-
-.b-toolbox {
-    &__1 {
-        .js-b-site_index--is-creating & {
-            display: none;
-        }
-    }
-
-    &__2 {
-        .js-b-site_index--is-creating & {
-            display: block;
-        }
-    }
-
-    &--footer {
-        &__2 {
-            .js-b-site_index--is-creating & {
-                display: block;
-            }
-        }
-    }
-}
-
-.b-steps {
-    .js-b-site_index--is-creating & {
-        display: block;
-    }
-}
 
 .b-footer {
     padding-bottom: map-get($css, line-height) * 3;

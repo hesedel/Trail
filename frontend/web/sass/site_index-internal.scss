@@ -6,9 +6,7 @@
     height: 100%;
 }
 
-.js-b-site_index {
-    &--is-creating {}
-}
+.js-b-site_index {}
 
 .b-sidebar,
 .b-map {
@@ -28,7 +26,7 @@
     line-height: $navbar-height;
     text-align: center;
 
-    &__2 {
+    &__createUpdate {
         display: none;
     }
 
@@ -38,7 +36,7 @@
         position: absolute;
         right: 0;
 
-        &__2 {
+        &__createUpdate {
             display: none;
         }
     }
