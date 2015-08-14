@@ -31,10 +31,82 @@ var App = (function () {
 
         _setMode(_modes.BROWSE);
 
+        GFunctionOverrides.init();
         Map.init();
         Search.init();
         Toolbox.init();
     }
+
+    var GFunctionOverrides = (function () {
+        function init() {
+            Maps_InfoWindow_prototype_set.init();
+        }
+
+        var Maps_InfoWindow_prototype_set = (function () {
+            var _fn;
+            var _onSetContent;
+            var _onSetPosition;
+            var _preventsDefault = false;
+
+            function init () {
+                _fn = _dp.google.maps.InfoWindow.prototype.set;
+
+                _dp.google.maps.InfoWindow.prototype.set = function (a, b) {
+                    if (a === 'content' && typeof _onSetContent === 'function') {
+                        _onSetContent(b);
+                    }
+
+                    if (a === 'position' && typeof _onSetPosition === 'function') {
+                        _onSetPosition(b);
+                    }
+
+                    if (!_preventsDefault) {
+                        _fn.apply(this, arguments);
+                    }
+                }
+            }
+
+            function allowDefault() {
+                _preventsDefault = false;
+            }
+
+            function onSetContent(fn) {
+                if (typeof fn === 'function') {
+                    _onSetContent = fn;
+                }
+            }
+
+            function onSetPosition(fn) {
+                if (typeof fn === 'function') {
+                    _onSetPosition = fn;
+                }
+            }
+
+            function preventDefault() {
+                _preventsDefault = true;
+            }
+
+            function reset() {
+                _onSetContent = undefined;
+                _onSetPosition = undefined;
+                _preventDefault = false;
+            }
+
+            return {
+                init: init,
+                allowDefault: allowDefault,
+                onSetContent: onSetContent,
+                onSetPosition: onSetPosition,
+                preventDefault: preventDefault,
+                reset: reset
+            };
+        }());
+
+        return {
+            init: init,
+            Maps_InfoWindow_prototype_set: Maps_InfoWindow_prototype_set
+        };
+    }());
 
     var Map = (function () {
         var _$map = $('.b-map__canvas');
@@ -65,7 +137,7 @@ var App = (function () {
 
         function setCenter(position) {
             if (typeof position.coords === 'object' && typeof position.coords.latitude === 'number' && typeof position.coords.latitude === 'number') {
-                _g_map.setCenter( {
+                _g_map.setCenter({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
@@ -117,7 +189,7 @@ var App = (function () {
 
                 // POI
                 if (typeof _place.geometry.viewport === 'undefined') {
-                    _markers.push(new _dp.google.maps.Marker( {
+                    _markers.push(new _dp.google.maps.Marker({
                         position: _place.geometry.location,
                         map: Map.getGMap()
                     }));
@@ -128,6 +200,10 @@ var App = (function () {
                 }
 
                 Map.fitBounds(_place.geometry.viewport);
+            });
+
+            _dp.google.maps.event.addListener(Map.getGMap(), 'click', function () {
+                _clearMarkers();
             });
         }
 
@@ -150,7 +226,8 @@ var App = (function () {
     }());
 
     var Toolbox = (function () {
-        var google_maps_InfoWindow_prototype_set;
+        var _$buttonCreate;
+        var _$buttonsPoi;
         var _poiTypes = {
             ORIGIN: 0,
             WAYPOINT: 1,
@@ -160,17 +237,18 @@ var App = (function () {
         var _poiOrigin = {};
         var _poiWaypoints = [];
         var _poiDestination = {};
-        var _$buttonCreate;
-        var _$buttonsPoi;
+        var _g_directionsService;
+        var _trails = [];
         var _$buttonCancel;
         var _$buttonSave;
 
         function init() {
+            _$buttonCreate = $('.js-b-toolbox__button--create');
+            _$buttonsPoi = $('.js-b-toolbox__buttons--poi');
             _poiType = _poiTypes.ORIGIN;
             _poiOrigin = new _Poi();
             _poiDestination = new _Poi();
-            _$buttonCreate = $('.js-b-toolbox__button--create');
-            _$buttonsPoi = $('.js-b-toolbox__buttons--poi');
+            _g_directionsService = new _dp.google.maps.DirectionsService();
             _$buttonCancel = $('.js-b-toolbox__button--cancel');
             _$buttonSave = $('.js-b-toolbox__button--save');
 
@@ -192,22 +270,12 @@ var App = (function () {
                 $this.addClass('active');
             });
 
-            google_maps_InfoWindow_prototype_set = _dp.google.maps.InfoWindow.prototype.set;
-            _dp.google.maps.InfoWindow.prototype.set = function (a, b) {
-                if (a === 'content') {
-                    //$('.b-steps').append(b);
-                }
-
-                if (a === 'position') {
-                    _mapClickEventHandler( {
-                        latLng: b
-                    });
-                }
-
-                if (_mode === _modes.BROWSE) {
-                    google_maps_InfoWindow_prototype_set.apply(this, arguments);
-                }
-            }
+            GFunctionOverrides.Maps_InfoWindow_prototype_set.preventDefault();
+            GFunctionOverrides.Maps_InfoWindow_prototype_set.onSetPosition(function (b) {
+                _mapClickEventHandler( {
+                    latLng: b
+                });
+            });
 
             _dp.google.maps.event.addListener(Map.getGMap(), 'click', _mapClickEventHandler);
             //_dp.google.maps.event.clearListeners(Map.getGMap(), 'click');
@@ -244,10 +312,6 @@ var App = (function () {
         }
 
         function _mapClickEventHandler(event) {
-            var directionsRenderer = new _dp.google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(Map.getGMap());
-            var directionsService = new _dp.google.maps.DirectionsService();
-
             if (_mode === _modes.CREATE) {
                 switch (_poiType) {
                     case _poiTypes.ORIGIN:
@@ -262,13 +326,20 @@ var App = (function () {
                 }
 
                 if (_poiOrigin.isSet() && _poiDestination.isSet()) {
-                    directionsService.route( {
+                    _g_directionsService.route( {
                         origin: _poiOrigin.getMarker().position,
                         destination: _poiDestination.getMarker().position,
                         travelMode: _dp.google.maps.TravelMode.WALKING
                     }, function (result, status) {
                         if (status == google.maps.DirectionsStatus.OK) {
-                            directionsRenderer.setDirections(result);
+                            _trails = new _dp.google.maps.Polyline( {
+                                path: result.routes[0].overview_path,
+                                geodesic: true,
+                                strokeColor: '#000000',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 3
+                            });
+                            _trails.setMap(Map.getGMap());
                         }
                     });
                 }
@@ -308,6 +379,7 @@ var App = (function () {
 
     return {
         init: init,
+        GFunctionOverrides: GFunctionOverrides,
         Map: Map,
         Search: Search,
         Toolbox: Toolbox
