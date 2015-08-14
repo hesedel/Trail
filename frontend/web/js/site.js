@@ -63,7 +63,7 @@ var App = (function () {
                     if (!_preventsDefault) {
                         _fn.apply(this, arguments);
                     }
-                }
+                };
             }
 
             function allowDefault() {
@@ -246,8 +246,8 @@ var App = (function () {
             _$buttonCreate = $('.js-b-toolbox__button--create');
             _$buttonsPoi = $('.js-b-toolbox__buttons--poi');
             _poiType = _poiTypes.ORIGIN;
-            _poiOrigin = new _Poi();
-            _poiDestination = new _Poi();
+            _poiOrigin = new Poi();
+            _poiDestination = new Poi();
             _g_directionsService = new _dp.google.maps.DirectionsService();
             _$buttonCancel = $('.js-b-toolbox__button--cancel');
             _$buttonSave = $('.js-b-toolbox__button--save');
@@ -289,7 +289,7 @@ var App = (function () {
             });
         }
 
-        function _Poi() {
+        function Poi() {
             var _marker = new _dp.google.maps.Marker();
 
             this.getMarker = function () {
